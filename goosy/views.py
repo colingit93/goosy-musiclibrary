@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from djangohomework.goosy.models import Track
-from djangohomework.goosy.serializers import SnippetSerializer
+from . import models
+from . import serializers
 #from . import models
 
 # Create your views here.
@@ -11,13 +11,13 @@ from djangohomework.goosy.serializers import SnippetSerializer
 def list_tracks(request):
     """List all tracks"""
     if request.method == 'GET':
-        tracks = Track.objects.all()
-        serializer = SnippetSerializer(tracks, many=True)
+        tracks = models.Track.objects.all()
+        serializer = serializers.TrackSerializer(tracks, many=True)
         return Response(serializer.data)
 
     # Data is send to the API
     elif request.method == 'POST':
-        serializer = SnippetSerializer(data=request.data)
+        serializer = serializers.TrackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,16 +31,16 @@ def detail_track(request, pk):
     """
 
     try:
-        tracks = Track.objects.get(pk=pk)
-    except Track.DoesNotExist:
+        tracks = models.Track.objects.get(pk=pk)
+    except models.Track.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = SnippetSerializer(tracks)
+        serializer = serializers.TrackSerializer(tracks)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = SnippetSerializer(tracks, data=request.data)
+        serializer = serializers.TrackSerializer(tracks, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

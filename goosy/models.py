@@ -4,8 +4,8 @@ from django.db import models
 class Track(models.Model):
 
     track_title = models.TextField()
-    track_author = models.TextField(default='UNKNOWNAUTHOR')
-    track_album = models.TextField(default='UNKNOWNALBUM')
+    track_author = models.TextField()
+    track_album = models.TextField()
     class Meta:
         verbose_name_plural = "Tracks"
     # TODO: implement __str__ method

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from djangohomework.goosy import models
+from . import models
 
 # Register your models here.
 class TrackAdmin(admin.ModelAdmin):
